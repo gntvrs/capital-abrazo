@@ -292,7 +292,7 @@ const Contact = () => {
               <Mail className="w-5 h-5 text-gold" /> marc@gemcapital.es
             </a>
             <a href="tel:+34900000000" className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors">
-              <Phone className="w-5 h-5 text-gold" /> +34 900 000 000
+              <Phone className="w-5 h-5 text-gold" /> +34 627 838 932
             </a>
           </div>
           <div className="flex items-center justify-center gap-3 text-foreground/50">
