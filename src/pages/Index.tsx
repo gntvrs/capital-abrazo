@@ -428,10 +428,10 @@ const Contact = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-8 pt-8 border-t border-border/50">
             <a
-              href="mailto:marc@gemcapital.es"
+              href="mailto:info@gemcapital.es"
               className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors"
             >
-              <Mail className="w-5 h-5 text-gold" /> marc@gemcapital.es
+              <Mail className="w-5 h-5 text-gold" /> info@gemcapital.es
             </a>
             <a
               href="tel:+34900000000"
