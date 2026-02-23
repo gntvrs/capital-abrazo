@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -27,23 +27,77 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install
+      - name: Install dependencies
         run: npm install
 
       - name: Build
         run: npm run build
 
-      - name: Upload artifact
+      - name: Patch SPA hash (Lovable compatibility)
+        run: |
+          node - <<'NODE'
+          const fs = require("fs");
+
+          const filePath = "dist/index.html";
+          if (!fs.existsSync(filePath)) {
+            console.error(`❌ ${filePath} not found. Check your build output folder (dist).`);
+            process.exit(1);
+          }
+
+          let html = fs.readFileSync(filePath, "utf8");
+
+          const patch = `
+<script>
+/* Lovable compatibility: normalize #section -> #/section for HashRouter */
+(function () {
+  function normalizeHash() {
+    var h = window.location.hash || "";
+    if (h && !h.startsWith("#/") && !h.startsWith("#!") && h !== "#") {
+      var clean = h.replace(/^#/, "");
+      window.location.replace(
+        window.location.pathname +
+        window.location.search +
+        "#/" + clean.replace(/^\\/+/, "")
+      );
+    }
+  }
+
+  normalizeHash();
+
+  window.addEventListener("hashchange", function () {
+    setTimeout(normalizeHash, 0);
+  }, false);
+})();
+</script>
+`.trim();
+
+          // Avoid double-injecting
+          if (!html.includes("Lovable compatibility: normalize")) {
+            if (html.includes("</head>")) {
+              html = html.replace("</head>", patch + "\n</head>");
+            } else if (html.includes("</body>")) {
+              html = html.replace("</body>", patch + "\n</body>");
+            } else {
+              html += "\n" + patch + "\n";
+            }
+            fs.writeFileSync(filePath, html, "utf8");
+            console.log("✅ Patched dist/index.html with hash normalizer");
+          } else {
+            console.log("ℹ️ Patch already present");
+          }
+          NODE
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
+    runs-on: ubuntu-latest
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
