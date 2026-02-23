@@ -36,7 +36,7 @@ jobs:
       - name: Patch SPA hash (Lovable compatibility)
         shell: bash
         run: |
-          cat > patch-hash.js <<'JS'
+          cat > patch-hash.cjs <<'JS'
           const fs = require("fs");
 
           const filePath = "dist/index.html";
@@ -72,6 +72,7 @@ jobs:
           </script>
           `.trim();
 
+          // Avoid double-injecting
           if (!html.includes("Lovable compatibility: normalize")) {
             if (html.includes("</head>")) {
               html = html.replace("</head>", patch + "\n</head>");
@@ -87,7 +88,7 @@ jobs:
           }
           JS
 
-          node patch-hash.js
+          node patch-hash.cjs
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
