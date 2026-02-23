@@ -1,6 +1,10 @@
 import { ArrowRight, Building2, TrendingUp, Users, Shield, Phone, Mail, MapPin } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
+const scrollTo = (id: string) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+};
+
 const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 bg-primary/95 backdrop-blur-sm">
     <div className="container mx-auto flex items-center justify-between px-6 py-4">
@@ -9,10 +13,10 @@ const Navbar = () => (
         <span className="font-body text-xs font-light text-stone_brand uppercase tracking-[0.25em]">Capital</span>
       </div>
       <div className="hidden md:flex items-center gap-8">
-        <a href="#tesis" className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Tesis</a>
-        <a href="#empresas" className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Empresas</a>
-        <a href="#inversores" className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Inversores</a>
-        <a href="#contacto" className="font-body text-sm font-medium text-gold hover:text-primary-foreground transition-colors">Contacto</a>
+        <button onClick={() => scrollTo("tesis")} className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Tesis</button>
+        <button onClick={() => scrollTo("empresas")} className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Empresas</button>
+        <button onClick={() => scrollTo("inversores")} className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Inversores</button>
+        <button onClick={() => scrollTo("contacto")} className="font-body text-sm font-medium text-gold hover:text-primary-foreground transition-colors">Contacto</button>
       </div>
     </div>
   </nav>
@@ -33,12 +37,12 @@ const Hero = () => (
           Invertimos con visión de permanencia. No compramos para vender. Compramos para construir.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
-          <a href="#empresas" className="inline-flex items-center gap-2 bg-forest text-gem_white font-body font-medium px-8 py-4 hover:bg-forest/90 transition-colors">
+          <button onClick={() => scrollTo("empresas")} className="inline-flex items-center gap-2 bg-forest text-gem_white font-body font-medium px-8 py-4 hover:bg-forest/90 transition-colors">
             Quiero vender mi empresa <ArrowRight className="w-4 h-4" />
-          </a>
-          <a href="#inversores" className="inline-flex items-center gap-2 border border-stone_brand/30 text-primary-foreground font-body font-medium px-8 py-4 hover:border-gold hover:text-gold transition-colors">
+          </button>
+          <button onClick={() => scrollTo("inversores")} className="inline-flex items-center gap-2 border border-stone_brand/30 text-primary-foreground font-body font-medium px-8 py-4 hover:border-gold hover:text-gold transition-colors">
             Soy inversor
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -106,9 +110,9 @@ const TargetProfile = () => (
             equipos consolidados y posición competitiva sólida. Sectores industriales, 
             servicios profesionales y distribución B2B.
           </p>
-          <a href="#contacto" className="inline-flex items-center gap-2 text-forest font-body font-semibold hover:text-gold transition-colors">
+          <button onClick={() => scrollTo("contacto")} className="inline-flex items-center gap-2 text-forest font-body font-semibold hover:text-gold transition-colors">
             Habla con nosotros <ArrowRight className="w-4 h-4" />
-          </a>
+          </button>
         </div>
         <div className="grid grid-cols-2 gap-6">
           {[
@@ -144,9 +148,9 @@ const ForCompanies = () => (
         <p className="font-body text-lg text-stone_brand font-light leading-relaxed mb-10">
           No somos un fondo al uso. No vendemos a los 5 años. Somos el hogar definitivo de tu empresa.
         </p>
-        <a href="#contacto" className="inline-flex items-center gap-2 bg-forest text-gem_white font-body font-medium px-8 py-4 hover:bg-forest/90 transition-colors">
+        <button onClick={() => scrollTo("contacto")} className="inline-flex items-center gap-2 bg-forest text-gem_white font-body font-medium px-8 py-4 hover:bg-forest/90 transition-colors">
           Cuéntanos sobre tu empresa <ArrowRight className="w-4 h-4" />
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -169,9 +173,9 @@ const ForInvestors = () => (
           Buscamos inversores alineados con nuestra filosofía: paciencia, rigor operativo 
           y creación de valor real.
         </p>
-        <a href="#contacto" className="inline-flex items-center gap-2 border-2 border-forest text-forest font-body font-medium px-8 py-4 hover:bg-forest hover:text-gem_white transition-colors">
+        <button onClick={() => scrollTo("contacto")} className="inline-flex items-center gap-2 border-2 border-forest text-forest font-body font-medium px-8 py-4 hover:bg-forest hover:text-gem_white transition-colors">
           Solicitar información <ArrowRight className="w-4 h-4" />
-        </a>
+        </button>
       </div>
     </div>
   </section>
