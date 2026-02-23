@@ -1,4 +1,6 @@
-import { ArrowRight, Building2, TrendingUp, Users, Shield, Phone, Mail, MapPin } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Building2, TrendingUp, Users, Shield, Phone, Mail, MapPin, Send } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const scrollTo = (id: string) => {
@@ -181,33 +183,127 @@ const ForInvestors = () => (
   </section>
 );
 
-const Contact = () => (
-  <section id="contacto" className="section-white py-24 md:py-32">
-    <div className="container mx-auto px-6">
-      <div className="max-w-2xl mx-auto text-center">
-        <p className="label-caps mb-4">Contacto</p>
-        <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground leading-tight mb-8">
-          Hablemos.
-        </h2>
-        <p className="font-body text-lg text-foreground/70 leading-relaxed mb-12">
-          Ya seas propietario de una empresa o inversor, nos encantaría conocerte.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-12">
-          <a href="mailto:info@gemcapital.es" className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors">
-            <Mail className="w-5 h-5 text-gold" /> info@gemcapital.es
-          </a>
-          <a href="tel:+34900000000" className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors">
-            <Phone className="w-5 h-5 text-gold" /> +34 900 000 000
-          </a>
-        </div>
-        <div className="flex items-center justify-center gap-3 text-foreground/50">
-          <MapPin className="w-4 h-4" />
-          <span className="font-body text-sm">Barcelona, España</span>
+const Contact = () => {
+  const { toast } = useToast();
+  const [form, setForm] = useState({ name: "", email: "", type: "propietario", message: "" });
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      toast({ title: "Por favor, completa todos los campos.", variant: "destructive" });
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      toast({ title: "Introduce un email válido.", variant: "destructive" });
+      return;
+    }
+    setSending(true);
+    setTimeout(() => {
+      setSending(false);
+      setForm({ name: "", email: "", type: "propietario", message: "" });
+      toast({ title: "¡Mensaje enviado!", description: "Nos pondremos en contacto contigo pronto." });
+    }, 800);
+  };
+
+  return (
+    <section id="contacto" className="section-white py-24 md:py-32">
+      <div className="container mx-auto px-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="label-caps mb-4">Contacto</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground leading-tight mb-8">
+              Hablemos.
+            </h2>
+            <p className="font-body text-lg text-foreground/70 leading-relaxed">
+              Ya seas propietario de una empresa o inversor, nos encantaría conocerte.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6 mb-12">
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label className="font-body text-sm font-medium text-foreground mb-2 block">Nombre</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  maxLength={100}
+                  placeholder="Tu nombre"
+                  className="w-full border border-border bg-background px-4 py-3 font-body text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-forest transition-colors"
+                />
+              </div>
+              <div>
+                <label className="font-body text-sm font-medium text-foreground mb-2 block">Email</label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  maxLength={255}
+                  placeholder="tu@email.com"
+                  className="w-full border border-border bg-background px-4 py-3 font-body text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-forest transition-colors"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="font-body text-sm font-medium text-foreground mb-2 block">¿Cómo nos contactas?</label>
+              <div className="flex gap-4">
+                {[
+                  { value: "propietario", label: "Soy propietario de una empresa" },
+                  { value: "inversor", label: "Soy inversor" },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setForm({ ...form, type: opt.value })}
+                    className={`flex-1 border px-4 py-3 font-body text-sm transition-colors ${
+                      form.type === opt.value
+                        ? "border-forest bg-forest/10 text-forest font-medium"
+                        : "border-border text-foreground/60 hover:border-foreground/30"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="font-body text-sm font-medium text-foreground mb-2 block">Mensaje</label>
+              <textarea
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                maxLength={1000}
+                rows={5}
+                placeholder="Cuéntanos sobre tu empresa o tus objetivos de inversión..."
+                className="w-full border border-border bg-background px-4 py-3 font-body text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-forest transition-colors resize-none"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={sending}
+              className="inline-flex items-center gap-2 bg-forest text-gem_white font-body font-medium px-8 py-4 hover:bg-forest/90 transition-colors disabled:opacity-50"
+            >
+              {sending ? "Enviando..." : "Enviar mensaje"} <Send className="w-4 h-4" />
+            </button>
+          </form>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-8 pt-8 border-t border-border/50">
+            <a href="mailto:info@gemcapital.es" className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors">
+              <Mail className="w-5 h-5 text-gold" /> info@gemcapital.es
+            </a>
+            <a href="tel:+34900000000" className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors">
+              <Phone className="w-5 h-5 text-gold" /> +34 900 000 000
+            </a>
+          </div>
+          <div className="flex items-center justify-center gap-3 text-foreground/50">
+            <MapPin className="w-4 h-4" />
+            <span className="font-body text-sm">Barcelona, España</span>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Footer = () => (
   <footer className="section-dark py-12">
