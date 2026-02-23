@@ -34,8 +34,9 @@ jobs:
         run: npm run build
 
       - name: Patch SPA hash (Lovable compatibility)
+        shell: bash
         run: |
-          node - <<'NODE'
+          cat > patch-hash.js <<'JS'
           const fs = require("fs");
 
           const filePath = "dist/index.html";
@@ -47,31 +48,30 @@ jobs:
           let html = fs.readFileSync(filePath, "utf8");
 
           const patch = `
-<script>
-/* Lovable compatibility: normalize #section -> #/section for HashRouter */
-(function () {
-  function normalizeHash() {
-    var h = window.location.hash || "";
-    if (h && !h.startsWith("#/") && !h.startsWith("#!") && h !== "#") {
-      var clean = h.replace(/^#/, "");
-      window.location.replace(
-        window.location.pathname +
-        window.location.search +
-        "#/" + clean.replace(/^\\/+/, "")
-      );
-    }
-  }
+          <script>
+          /* Lovable compatibility: normalize #section -> #/section for HashRouter */
+          (function () {
+            function normalizeHash() {
+              var h = window.location.hash || "";
+              if (h && !h.startsWith("#/") && !h.startsWith("#!") && h !== "#") {
+                var clean = h.replace(/^#/, "");
+                window.location.replace(
+                  window.location.pathname +
+                  window.location.search +
+                  "#/" + clean.replace(/^\\/+/, "")
+                );
+              }
+            }
 
-  normalizeHash();
+            normalizeHash();
 
-  window.addEventListener("hashchange", function () {
-    setTimeout(normalizeHash, 0);
-  }, false);
-})();
-</script>
-`.trim();
+            window.addEventListener("hashchange", function () {
+              setTimeout(normalizeHash, 0);
+            }, false);
+          })();
+          </script>
+          `.trim();
 
-          // Avoid double-injecting
           if (!html.includes("Lovable compatibility: normalize")) {
             if (html.includes("</head>")) {
               html = html.replace("</head>", patch + "\n</head>");
@@ -85,7 +85,9 @@ jobs:
           } else {
             console.log("ℹ️ Patch already present");
           }
-          NODE
+          JS
+
+          node patch-hash.js
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
