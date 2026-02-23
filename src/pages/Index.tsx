@@ -1,12 +1,237 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { ArrowRight, Building2, TrendingUp, Users, Shield, Phone, Mail, MapPin } from "lucide-react";
+import heroBg from "@/assets/hero-bg.jpg";
+
+const Navbar = () => (
+  <nav className="fixed top-0 left-0 right-0 z-50 bg-primary/95 backdrop-blur-sm">
+    <div className="container mx-auto flex items-center justify-between px-6 py-4">
+      <div className="flex items-baseline gap-1">
+        <span className="font-heading text-2xl font-semibold text-primary-foreground tracking-wide">GEM</span>
+        <span className="font-body text-xs font-light text-stone_brand uppercase tracking-[0.25em]">Capital</span>
+      </div>
+      <div className="hidden md:flex items-center gap-8">
+        <a href="#tesis" className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Tesis</a>
+        <a href="#empresas" className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Empresas</a>
+        <a href="#inversores" className="font-body text-sm text-stone_brand hover:text-primary-foreground transition-colors">Inversores</a>
+        <a href="#contacto" className="font-body text-sm font-medium text-gold hover:text-primary-foreground transition-colors">Contacto</a>
+      </div>
+    </div>
+  </nav>
+);
+
+const Hero = () => (
+  <section className="relative min-h-screen flex items-center section-dark overflow-hidden">
+    <div className="absolute inset-0">
+      <img src={heroBg} alt="" className="w-full h-full object-cover opacity-20" />
+    </div>
+    <div className="relative container mx-auto px-6 py-32">
+      <div className="max-w-3xl">
+        <p className="label-caps mb-6 animate-fade-in-up">Fondo perpetuo de adquisición de PYMES</p>
+        <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-medium text-primary-foreground leading-[1.1] mb-8 animate-fade-in-up" style={{ animationDelay: "0.15s" }}>
+          Adquirimos grandes empresas y las hacemos crecer.
+        </h1>
+        <p className="font-body text-xl text-stone_brand font-light leading-relaxed max-w-xl mb-10 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+          Invertimos con visión de permanencia. No compramos para vender. Compramos para construir.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
+          <a href="#empresas" className="inline-flex items-center gap-2 bg-forest text-gem_white font-body font-medium px-8 py-4 hover:bg-forest/90 transition-colors">
+            Quiero vender mi empresa <ArrowRight className="w-4 h-4" />
+          </a>
+          <a href="#inversores" className="inline-flex items-center gap-2 border border-stone_brand/30 text-primary-foreground font-body font-medium px-8 py-4 hover:border-gold hover:text-gold transition-colors">
+            Soy inversor
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const ValueProps = () => {
+  const props = [
+    {
+      icon: Shield,
+      title: "Capital permanente",
+      desc: "No tenemos fecha de salida. Tu empresa tendrá un hogar para siempre.",
+    },
+    {
+      icon: Users,
+      title: "Líderes con talento",
+      desc: "Desarrollamos el equipo directivo y atraemos talento para impulsar el crecimiento.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Herramientas para crecer",
+      desc: "Aportamos operaciones, tecnología y red de contactos para escalar tu negocio.",
+    },
+    {
+      icon: Building2,
+      title: "Libertad para operar",
+      desc: "Respetamos la cultura y autonomía de cada empresa. Sumamos, no imponemos.",
+    },
+  ];
+
+  return (
+    <section id="tesis" className="section-light py-24 md:py-32">
+      <div className="container mx-auto px-6">
+        <p className="label-caps mb-4">Nuestra propuesta</p>
+        <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground max-w-2xl mb-16 leading-tight">
+          Un hogar permanente. Talento. Herramientas. Libertad.
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {props.map((p) => (
+            <div key={p.title} className="group">
+              <div className="w-12 h-12 rounded-full bg-sand flex items-center justify-center mb-5">
+                <p.icon className="w-5 h-5 text-forest" />
+              </div>
+              <h3 className="font-heading text-xl font-medium text-foreground mb-3">{p.title}</h3>
+              <p className="font-body text-base text-foreground/70 leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TargetProfile = () => (
+  <section className="section-white py-24 md:py-32">
+    <div className="container mx-auto px-6">
+      <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <p className="label-caps mb-4">Perfil de empresa objetivo</p>
+          <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground leading-tight mb-8">
+            Buscamos PYMES extraordinarias en sectores B2B maduros.
+          </h2>
+          <p className="font-body text-lg text-foreground/70 leading-relaxed mb-8">
+            Nuestra tesis de inversión se centra en empresas con EBITDA de 0,5–3M€, 
+            equipos consolidados y posición competitiva sólida. Sectores industriales, 
+            servicios profesionales y distribución B2B.
+          </p>
+          <a href="#contacto" className="inline-flex items-center gap-2 text-forest font-body font-semibold hover:text-gold transition-colors">
+            Habla con nosotros <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+        <div className="grid grid-cols-2 gap-6">
+          {[
+            { label: "EBITDA objetivo", value: "0,5 – 3M€" },
+            { label: "Sectores", value: "B2B maduros" },
+            { label: "Holding period", value: "Permanente" },
+            { label: "Geografía", value: "España" },
+          ].map((kpi) => (
+            <div key={kpi.label} className="bg-background p-6 border border-border/50">
+              <p className="label-caps mb-2 text-copper" style={{ color: "hsl(var(--copper))" }}>{kpi.label}</p>
+              <p className="font-heading text-2xl md:text-3xl font-medium text-foreground">{kpi.value}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const ForCompanies = () => (
+  <section id="empresas" className="section-dark py-24 md:py-32">
+    <div className="container mx-auto px-6">
+      <div className="max-w-3xl mx-auto text-center">
+        <p className="label-caps mb-4">Para propietarios de empresas</p>
+        <h2 className="font-heading text-4xl md:text-5xl font-medium text-primary-foreground leading-tight mb-8">
+          ¿Preparado para dar el siguiente paso con tu empresa?
+        </h2>
+        <p className="font-body text-lg text-stone_brand font-light leading-relaxed mb-6">
+          Para propietarios que quieren dar un paso atrás o explorar nuevas oportunidades, 
+          hacemos la transición fácil. Tu equipo da un paso adelante, tu empresa sigue creciendo, 
+          y tu legado perdura.
+        </p>
+        <p className="font-body text-lg text-stone_brand font-light leading-relaxed mb-10">
+          No somos un fondo al uso. No vendemos a los 5 años. Somos el hogar definitivo de tu empresa.
+        </p>
+        <a href="#contacto" className="inline-flex items-center gap-2 bg-forest text-gem_white font-body font-medium px-8 py-4 hover:bg-forest/90 transition-colors">
+          Cuéntanos sobre tu empresa <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+const ForInvestors = () => (
+  <section id="inversores" className="section-light py-24 md:py-32">
+    <div className="container mx-auto px-6">
+      <div className="max-w-3xl mx-auto text-center">
+        <p className="label-caps mb-4">Para inversores</p>
+        <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground leading-tight mb-8">
+          Capital paciente. Retornos compuestos.
+        </h2>
+        <p className="font-body text-lg text-foreground/70 leading-relaxed mb-6">
+          GEM Capital ofrece exposición a un portafolio diversificado de PYMES españolas 
+          con gestión activa y visión de largo plazo. Nuestro modelo de fondo perpetuo 
+          permite que el interés compuesto trabaje a favor del inversor.
+        </p>
+        <p className="font-body text-lg text-foreground/70 leading-relaxed mb-10">
+          Buscamos inversores alineados con nuestra filosofía: paciencia, rigor operativo 
+          y creación de valor real.
+        </p>
+        <a href="#contacto" className="inline-flex items-center gap-2 border-2 border-forest text-forest font-body font-medium px-8 py-4 hover:bg-forest hover:text-gem_white transition-colors">
+          Solicitar información <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+const Contact = () => (
+  <section id="contacto" className="section-white py-24 md:py-32">
+    <div className="container mx-auto px-6">
+      <div className="max-w-2xl mx-auto text-center">
+        <p className="label-caps mb-4">Contacto</p>
+        <h2 className="font-heading text-4xl md:text-5xl font-medium text-foreground leading-tight mb-8">
+          Hablemos.
+        </h2>
+        <p className="font-body text-lg text-foreground/70 leading-relaxed mb-12">
+          Ya seas propietario de una empresa o inversor, nos encantaría conocerte.
+        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-12">
+          <a href="mailto:info@gemcapital.es" className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors">
+            <Mail className="w-5 h-5 text-gold" /> info@gemcapital.es
+          </a>
+          <a href="tel:+34900000000" className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors">
+            <Phone className="w-5 h-5 text-gold" /> +34 900 000 000
+          </a>
+        </div>
+        <div className="flex items-center justify-center gap-3 text-foreground/50">
+          <MapPin className="w-4 h-4" />
+          <span className="font-body text-sm">Barcelona, España</span>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const Footer = () => (
+  <footer className="section-dark py-12">
+    <div className="container mx-auto px-6">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-baseline gap-1">
+          <span className="font-heading text-xl font-semibold text-primary-foreground tracking-wide">GEM</span>
+          <span className="font-body text-[10px] font-light text-stone_brand uppercase tracking-[0.25em]">Capital</span>
+        </div>
+        <p className="font-body text-sm text-stone_brand">
+          © {new Date().getFullYear()} GEM Capital. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+);
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen">
+      <Navbar />
+      <Hero />
+      <ValueProps />
+      <TargetProfile />
+      <ForCompanies />
+      <ForInvestors />
+      <Contact />
+      <Footer />
     </div>
   );
 };
