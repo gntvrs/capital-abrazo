@@ -80,7 +80,7 @@ const Hero = () => (
           style={{ animationDelay: "0.3s" }}
         >
           Invertimos con visión de permanencia. No compramos para vender. Compramos
-          para construir.
+          para seguir construyendo.
         </p>
         <div
           className="flex flex-col sm:flex-row gap-4 animate-fade-in-up"
