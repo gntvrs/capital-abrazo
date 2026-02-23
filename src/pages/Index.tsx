@@ -112,7 +112,7 @@ const TargetProfile = () => (
         </div>
         <div className="grid grid-cols-2 gap-6">
           {[
-            { label: "EBITDA objetivo", value: "0,5 – 3M€" },
+            { label: "EBITDA objetivo", value: "0,5 – 2M€" },
             { label: "Sectores", value: "B2B maduros" },
             { label: "Holding period", value: "Permanente" },
             { label: "Geografía", value: "España" },
