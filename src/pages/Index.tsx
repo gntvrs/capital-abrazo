@@ -434,7 +434,7 @@ const Contact = () => {
               <Mail className="w-5 h-5 text-gold" /> info@gemcapital.es
             </a>
             <a
-              href="tel:+34900000000"
+              href="tel:+34627838932"
               className="flex items-center gap-3 font-body text-foreground hover:text-gold transition-colors"
             >
               <Phone className="w-5 h-5 text-gold" /> +34 627 838 932
