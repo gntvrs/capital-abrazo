@@ -165,7 +165,7 @@ const TargetProfile = () => (
             Buscamos PYMES extraordinarias en sectores B2B maduros.
           </h2>
           <p className="font-body text-lg text-foreground/70 leading-relaxed mb-8">
-            Nuestra tesis de inversión se centra en empresas con EBITDA de 0,5–3M€,
+            Nuestra tesis de inversión se centra en empresas con EBITDA de 0,5–2M€,
             equipos consolidados y posición competitiva sólida. Sectores industriales,
             servicios profesionales y distribución B2B.
           </p>
